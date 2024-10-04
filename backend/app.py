@@ -1,30 +1,24 @@
+# app.py
 from flask import Flask, jsonify
-import feedparser
+from rss_parse_service import parse_feed
 
 app = Flask(__name__)
 
-# List of RSS feeds to aggregate from
+# Example RSS feeds with different structures
 RSS_FEEDS = {
-    'tech': 'https://www.wired.com/feed/rss',
-    'world': 'http://feeds.bbci.co.uk/news/rss.xml',
-    'business': 'https://www.cnbc.com/id/100003114/device/rss/rss.html'
+    'tech': [
+        'https://techcrunch.com/feed/',
+        'https://www.theverge.com/rss/index.xml'
+    ],
+    'world': [
+        'http://feeds.bbci.co.uk/news/world/rss.xml',
+        'http://rss.cnn.com/rss/edition_world.rss'
+    ],
+    'business': [
+        'https://www.cnbc.com/id/100003114/device/rss/rss.html',
+        'http://feeds.reuters.com/reuters/businessNews'
+    ]
 }
-
-def parse_rss(feed_url):
-    """
-    Fetch and parse RSS feed data.
-    """
-    feed = feedparser.parse(feed_url)
-    articles = []
-
-    for entry in feed.entries:
-        articles.append({
-            'title': entry.title,
-            'link': entry.link,
-            'published': entry.published
-        })
-    
-    return articles
 
 @app.route('/')
 def home():
@@ -33,13 +27,19 @@ def home():
 @app.route('/news')
 def get_news():
     """
-    Aggregate news from multiple RSS feeds and return as JSON.
+    Aggregate news from multiple RSS feeds for each category and return as JSON.
     """
     aggregated_news = {}
-    
-    for category, url in RSS_FEEDS.items():
-        aggregated_news[category] = parse_rss(url)
-    
+
+    for category, urls in RSS_FEEDS.items():
+        aggregated_news[category] = []
+        for url in urls:
+            try:
+                articles = parse_feed(url)
+                aggregated_news[category].extend(articles)
+            except Exception as e:
+                print(f"Error parsing {url}: {e}")
+
     return jsonify(aggregated_news)
 
 if __name__ == '__main__':
