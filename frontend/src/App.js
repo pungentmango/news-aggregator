@@ -5,8 +5,8 @@ import News from './components/News';
 
 function App() {
     return (
-        <div className="App">
-            <News />
+        <div className="w-full">
+            <News/>
         </div>
     );
 }

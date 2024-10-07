@@ -1,35 +1,18 @@
 /* src/App.css */
-.App {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+  border: 8px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 8px solid #fff;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
 }
 
-h1 {
-  text-align: center;
-}
-
-h2 {
-  color: #2c3e50;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin: 10px 0;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-}
-
-a {
-  text-decoration: none;
-  color: #2980b9;
-}
-
-a:hover {
-  text-decoration: underline;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

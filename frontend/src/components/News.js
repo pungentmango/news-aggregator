@@ -1,56 +1,39 @@
-// src/components/News.js
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const News = () => {
-    const [newsData, setNewsData] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+import Articles from './Articles';
+import Header from './Header';
 
+const News = () => {
+    const [activeTab, setActiveTab] = useState('');
+    const [tabs, setTabs] = useState([]);
+    const [newsData, setNewsData] = useState({});
+  
+    // Fetch news based on the active tab
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/news');
+                const response = await axios.get(`http://localhost:5000/news`);
                 setNewsData(response.data);
-                setLoading(false);
-            } catch (err) {
-                setError(err);
-                setLoading(false);
+                const fetchedTabs = Object.keys(response.data);
+                setTabs(fetchedTabs);
+                
+                // Set the active tab to the first one if available
+                if (fetchedTabs.length > 0) {
+                    setActiveTab(fetchedTabs[0]);
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
             }
         };
-
+  
         fetchNews();
-    }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error fetching news: {error.message}</div>;
-    }
+    }, []);  
 
     return (
-        <div>
-            <h1>News Aggregator</h1>
-            {Object.keys(newsData).map((category) => (
-                <div key={category}>
-                    <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
-                    <ul>
-                        {newsData[category].map((article, index) => (
-                            <li key={index}>
-                                <a href={article.link} target="_blank" rel="noopener noreferrer">
-                                    {article.title}
-                                </a>
-                                <p>{article.description}</p>
-                                <small>
-                                    Published on: {article.published} by {article.creator}
-                                </small>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+        <div className='w-full'>
+            <Header siteName="News Aggregator" tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Articles articles={newsData[activeTab]} />
         </div>
     );
 };
