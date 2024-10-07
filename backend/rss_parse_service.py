@@ -1,6 +1,5 @@
 # rss_parse_service.py
 import feedparser
-import dateutil.parser
 
 def parse_feed(feed_url):
     """
