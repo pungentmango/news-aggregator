@@ -8,16 +8,33 @@ CORS(app)
 
 # Example RSS feeds with different structures
 RSS_FEEDS = {
-    'tech': [
-        'https://techcrunch.com/feed/',
-        'https://www.theverge.com/rss/index.xml'
-    ],
     'world': [
+        'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
         'http://feeds.bbci.co.uk/news/world/rss.xml',
-        'http://rss.cnn.com/rss/edition_world.rss'
+        'http://rss.cnn.com/rss/edition_world.rss',
+        'http://feeds.reuters.com/reuters/worldNews',
+        'https://www.aljazeera.com/xml/rss/all.xml'
+    ],
+    'politics': [
+        'https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml',
+        'http://feeds.bbci.co.uk/news/politics/rss.xml',
+        'http://rss.cnn.com/rss/edition_politics.rss',
+        'http://feeds.reuters.com/reuters/politicsNews',
+        'https://www.aljazeera.com/xml/rss/feeds/americas.xml'
+    ],
+    'technology': [
+        'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
+        'http://feeds.bbci.co.uk/news/technology/rss.xml',
+        'http://rss.cnn.com/rss/edition_technology.rss',
+        'http://feeds.reuters.com/reuters/technologyNews',
+        'https://www.aljazeera.com/xml/rss/feeds/technology.xml'
     ],
     'business': [
-        'https://www.cnbc.com/id/100003114/device/rss/rss.html',
+        'https://rss.nytimes.com/services/xml/rss/nyt/Business.xml',
+        'http://feeds.bbci.co.uk/news/business/rss.xml',
+        'http://rss.cnn.com/rss/edition_business.rss',
+        'http://feeds.reuters.com/reuters/businessNews',
+        'https://www.aljazeera.com/xml/rss/feeds/business.xml'
     ]
 }
 
