@@ -1,8 +1,10 @@
 # app.py
 from flask import Flask, jsonify
+from flask_cors import CORS
 from rss_parse_service import parse_feed
 
 app = Flask(__name__)
+CORS(app)
 
 # Example RSS feeds with different structures
 RSS_FEEDS = {
@@ -16,7 +18,6 @@ RSS_FEEDS = {
     ],
     'business': [
         'https://www.cnbc.com/id/100003114/device/rss/rss.html',
-        'http://feeds.reuters.com/reuters/businessNews'
     ]
 }
 
